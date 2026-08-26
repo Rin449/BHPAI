@@ -1,12 +1,12 @@
-#  TÀI LIỆU DỰ ÁN TOÀN DIỆN: BHPAI
+# TÀI LIỆU DỰ ÁN TOÀN DIỆN: BHPAI
 > **Phiên bản hệ thống**: V1.5 Enterprise Edition  
-> **Tác giả**: BHPAI Engineering Team  
+> **Tác giả**: Ivan
 > **Ngôn ngữ phát triển**: C++17 (MinGW-w64 / MSYS2), Python 3.9+, PyQt6, FastAPI, MinHook, Capstone Engine, PyTorch, LightGBM  
 > **Tài liệu tham chiếu master**: Chi tiết kiến trúc, giải thuật, cấu trúc mã nguồn, quy trình bảo mật và hướng dẫn vận hành toàn bộ hệ thống BHPAI.
 
 ---
 
-##  MỤC LỤC TỔNG QUAN
+## MỤC LỤC TỔNG QUAN
 
 1. [TỔNG QUAN DỰ ÁN & TẦM NHÌN KIẾN TRÚC](#1-tổng-quan-dự-án--tầm-nhìn-kiến-trúc)
    - [1.1 Bối cảnh bảo mật & Bài toán đặt ra](#11-bối-cảnh-bảo-mật--bài-toán-đặt-ra)
@@ -50,8 +50,7 @@
 9. [CHI TIẾT PHÂN HỆ 7: GIAO DIỆN PYQT6 & RESTFUL API SERVER](#9-chi-tiết-phân-hệ-7-giao-diện-pyqt6--restful-api-server)
    - [7.1 Kiến trúc Giao diện PyQt6 Modern GUI (Multi-threading QThread)](#71-kiến-trúc-giao-diện-pyqt6-modern-gui-multi-threading-qthread)
    - [7.2 RESTful API Server (FastAPI Framework & Swagger Documentation)](#72-restful-api-server-fastapi-framework--swagger-documentation)
-10. [BẢN ĐỒ CẤU TRÚC MÃ NGUỒN VÀ FILESYSTEM MAP](#10-bản-đồ-cấu-trúc-mã-nguồn-và-filesystem-map)
-11. [HƯỚNG DẪN BIÊN DỊCH, CẤU HÌNH VÀ KHỞI CHẠY HỆ THỐNG](#11-hướng-dẫn-biên-dịch-cấu-hình-và-khởi-chạy-hệ-thống)
+10. [HƯỚNG DẪN KHỞI CHẠY GIAO DIỆN GUI (GUI.PY)](#10-hướng-dẫn-khởi-chạy-giao-diện-gui-guipy)
 
 ---
 
@@ -620,129 +619,23 @@ Dự án tích hợp REST Server ([`server/main.py`](file:///c:/Users/Kryo/Music
 
 ---
 
-## 10. BẢN ĐỒ CẤU TRÚC MÃ NGUỒN VÀ FILESYSTEM MAP
+## 10. HƯỚNG DẪN KHỞI CHẠY GIAO DIỆN GUI (GUI.PY)
 
-Bản đồ liên kết toàn bộ tập tin mã nguồn trong dự án:
-
-```
-BHPAI/
-├── Core/
-│   ├── sandbox/
-│   │   ├── launcher/                    # [C++] Sandbox Launcher & Controller
-│   │   │   ├── main.cpp                 # Điểm vào Launcher, CLI Controller & Fake C2 Server
-│   │   │   ├── ProcessController.cpp    # Tạo Process, Virtual Desktop & Job Objects
-│   │   │   ├── BehaviorCorrelator.cpp   # Chuẩn hóa sự kiện & Tương quan MITRE ATT&CK
-│   │   │   ├── EtwMonitor.cpp           # Giám sát Kernel Windows Event Tracing
-│   │   │   ├── MemoryDumper.cpp         # Chụp ảnh bộ nhớ RAM tiến trình
-│   │   │   └── RamPagefileKeyExtractor.cpp # Quét khóa AES/ChaCha từ RAM & pagefile.sys
-│   │   ├── monitor/                     # [C++] Stealth Monitor DLL (Injected into Malware)
-│   │   │   ├── DllMain.cpp              # PEB Unlinking & Memory PE Header Scrubber
-│   │   │   ├── HookManager.cpp          # MinHook Interceptors (Filesystem, Reg, Process)
-│   │   │   ├── RegistryOverlay.cpp      # Virtual Registry Merged View Overlay
-│   │   │   └── PathMapper.hpp           # Virtual Filesystem Copy-On-Write Path Mapper
-│   │   └── common/                      # Cấu trúc dữ liệu sự kiện chung (EventDefinitions.hpp)
-│   ├── scanner/                         # [C++] Static PE Analyzer & Opcode Engine
-│   │   ├── pe_analyzer.cpp              # Phân tích tĩnh PE cấu trúc & Dị thường
-│   │   ├── pe_features.cpp              # Trích xuất Vector đặc trưng số hóa
-│   │   ├── opcode_tfidf.cpp             # Trích xuất Opcode N-Grams & Trọng số TF-IDF
-│   │   ├── CFG.cpp                      # Control Flow Graph Builder
-│   │   └── YaraGen.cpp                  # Tự động sinh luật YARA tiêu chuẩn
-│   ├── Decompile/                       # [C++] Capstone Disassembler Integration
-│   │   ├── Disassembler.cpp             # Capstone Engine x86/x64 Disassembler
-│   │   └── PeParser.cpp                 # Parsing DOS, NT Headers, IAT/EAT
-│   ├── pack/                            # [C++] Engine Unpack Mã Nén
-│   │   ├── UPX.cpp                      # Nhận diện & Unpack mã UPX
-│   │   └── WWPack.cpp                   # Nhận diện & Unpack mã WWPack
-│   ├── vault/                           # [Python] Zero-Knowledge Encrypted Backup Engine
-│   │   ├── client.py                    # Client Vault API Manager
-│   │   ├── crypto_engine.py             # AES-256-GCM, Argon2id/PBKDF2 & HKDF Key Tree
-│   │   ├── pake.py                      # Giao thức xác thực SRP-6a PAKE (RFC 5054)
-│   │   └── integrity.py                 # Binary Length-Prefixed Canonical AAD
-│   └── Train/                           # [Python] Machine Learning Pipeline
-│       ├── feature_extractor.py         # Vector hóa đặc trưng Tĩnh & Động
-│       ├── api_sequence_embedder.py     # PyTorch LSTM/Transformer Sequence Embedder
-│       ├── gnn_embedder.py              # PyTorch Graph Neural Network trên CFG Graph
-│       ├── shap_feature_pruning.py      # Tối ưu hóa đặc trưng bằng SHAP Values
-│       └── model3.pkl                   # Trained LightGBM Classifier Model
-├── BHR/                                 # [C++] Behavioral Ransomware Detector
-│   └── source/
-│       ├── RansomwareDetector.cpp       # Tính Entropy real-time, Burst Rate, Shadow Copy Wiping
-│       └── bhr_identify.cpp             # Identification Entrypoint
-├── recovery/                            # [Python] Ransomware Recovery Module
-│   ├── crypto_tracker.py                # Ghi nhận Crypto Timeline & Bản đồ biến đổi file
-│   └── methods/
-│       └── automated_overlay_restore.py # Rollback khôi phục file gốc từ COW Overlay
-├── fuzzy/                               # [C] Fuzzy Hashing Library (SSDEEP / TLSH)
-├── server/                              # [Python] RESTful API Server (FastAPI)
-│   ├── main.py                          # Endpoint API Server chính
-│   └── vault_router.py                  # Endpoints xử lý sao lưu đám mây Vault
-├── gui.py                               # [Python] Giao diện người dùng chính (PyQt6 Modern GUI)
-├── gui_features.py                      # [Python] Controller tích hợp GUI với C++/Python Engines
-├── gui_vault.py                         # [Python] PyQt6 Module cho Zero-Knowledge Vault
-├── makefile                             # Script biên dịch toàn bộ dự án C++ bằng MSYS2 MinGW
-└── BAO_CAO_DU_AN_BHPAI_CHI_TIET.md     # Tài liệu giới thiệu dự án master (File hiện tại)
-```
-
----
-
-## 11. HƯỚNG DẪN BIÊN DỊCH, CẤU HÌNH VÀ KHỞI CHẠY HỆ THỐNG
-
-### 11.1 Yêu cầu môi trường hệ thống
-- **Hệ điều hành**: Windows 10 / Windows 11 (64-bit).
-- **Trình biên dịch C++**: MSYS2 MinGW-w64 (GCC 11+, C++17 support).
-- **Môi trường Python**: Python 3.9 trở lên.
-- **Thư viện Python phụ thuộc**: Chạy câu lệnh cài đặt:
-  ```bash
-  pip install PyQt6 capstone yara-python pefile scikit-learn lightgbm torch pandas numpy matplotlib psutil joblib fastapi uvicorn cryptography
-  ```
-
----
-
-### 11.2 Biên dịch các Thành phần C++ (Makefile Rules)
-Mở terminal **MSYS2 MinGW 64-bit** tại thư mục gốc của dự án và chạy các lệnh:
+### 10.1 Cài đặt phụ thuộc Python
+Để chạy giao diện quản trị BHPAI GUI, cần chuẩn bị môi trường Python 3.9+ và cài đặt các gói phụ thuộc:
 
 ```bash
-# 1. Biên dịch toàn bộ Sandbox (Launcher 64-bit/32-bit & Monitor DLL 64-bit/32-bit):
-make sandbox
-
-# 2. Biên dịch Phân hệ Static PE Analyzer:
-make pe_analyzer.exe
-
-# 3. Biên dịch Phân hệ BHR Ransomware Detector:
-cd BHR && make && cd ..
+pip install PyQt6 capstone yara-python pefile scikit-learn lightgbm torch pandas numpy matplotlib psutil joblib fastapi uvicorn cryptography
 ```
-
-Các tập tin Binary thực thi sau khi biên dịch sẽ tự động xuất ra thư mục dự án:
-- `BHPAISandbox.exe` & `BHPAISandbox32.exe`
-- `BHPAIMonitor.dll`, `sysnethelper.dll`, `sysnethelper32.dll`
-- `pe_analyzer.exe`
-- `bhr_identify.exe`
 
 ---
 
-### 11.3 Khởi chạy Giao diện Dashboard (PyQt6 GUI)
-Khởi chạy ứng dụng đồ họa quản trị:
+### 10.2 Khởi chạy Giao diện (PyQt6 GUI)
+Mở Terminal / Command Prompt tại thư mục dự án và thực thi câu lệnh:
+
 ```bash
 python gui.py
 ```
 
 ---
-
-### 11.4 Chạy Phân tích Động qua Dòng lệnh (CLI Sandbox Mode)
-Bạn có thể phân tích trực tiếp một file PE nghi ngờ bằng dòng lệnh mà không cần mở GUI:
-```bash
-BHPAISandbox.exe C:\path\to\suspicious_sample.exe
-```
-Kết quả phân tích sự kiện sẽ tự động ghi ra tập tin `events.jsonl` và `report.json`.
-
----
-
-### 11.5 Khởi chạy REST API Server
-Để mở server API tích hợp với hạ tầng SOC/SOAR:
-```bash
-python server/main.py
-```
-Sau khi khởi chạy, tài liệu tương tác API Swagger có thể truy cập tại: `http://localhost:8000/docs`.
-
----
-*Tài liệu Master của dự án BHPAI (Behavioral Hybrid Predictive AI) được biên soạn và bảo trì bởi BHPAI Engineering Team.*
+*Tài liệu Master của dự án BHPAI được biên soạn và bảo trì bởi Ivan.*
