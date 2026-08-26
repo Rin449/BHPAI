@@ -62,7 +62,7 @@ Trong kỷ nguyên an ninh mạng hiện đại, các chủng mã độc (Malwar
 2. **Lẩn tránh Sandbox (Anti-Sandbox / Anti-Analysis)**: Kiểm tra thông tin môi trường ảo hóa (VMware, VirtualBox, QEMU), kiểm tra sự có mặt của debugger, quét các DLL giám sát nạp trong tiến trình (Hook detection), hoặc thực hiện các hành vi ngụy trang chờ đợi (Sleep evasion).
 3. **Phá hủy dữ liệu tốc độ cao (High-speed Crypto Destruction)**: Các dòng Ransomware như LockBit, BlackCat, Conti thực hiện mã hóa bất đồng bộ đa luồng (Multi-threaded I/O), xóa sạch bản sao lưu hệ thống (Volume Shadow Copies) và các kênh phục hồi trong vài giây.
 
-**BHPAI (Behavioral Hybrid Predictive AI)** ra đời nhằm giải quyết triệt để các bài toán thách thức trên bằng giải pháp **toàn diện 3 lớp (Hybrid Tri-Layer Security)**: Phân tích Tĩnh AI, Phân tích Động Sandbox Cách ly Tuyệt đối, và Engine Giám sát Phục hồi Ransomware Thời gian thực.
+**BHPAI** ra đời nhằm giải quyết triệt để các bài toán thách thức trên bằng giải pháp **toàn diện 3 lớp (Hybrid Tri-Layer Security)**: Phân tích Tĩnh AI, Phân tích Động Sandbox Cách ly Tuyệt đối, và Engine Giám sát Phục hồi Ransomware Thời gian thực.
 
 ---
 
