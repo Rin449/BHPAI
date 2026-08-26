@@ -124,6 +124,7 @@ BHPAI được thiết kế dựa trên 4 trụ cột kiến trúc vững chắc
 Luồng xử lý toàn diện của hệ thống từ khi nhận mẫu PE cho đến khi xuất báo cáo và khôi phục dữ liệu:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#1E293B', 'primaryTextColor': '#F8FAFC', 'primaryBorderColor': '#0284C7', 'lineColor': '#0284C7', 'textColor': '#0F172A', 'actorBkg': '#1E293B', 'actorTextColor': '#F8FAFC', 'actorBorder': '#38BDF8', 'signalColor': '#0284C7', 'signalTextColor': '#0F172A', 'labelBoxBkgColor': '#E2E8F0', 'labelBoxBorderColor': '#64748B', 'labelTextColor': '#0F172A', 'loopTextColor': '#0F172A', 'noteBkgColor': '#FEF08A', 'noteTextColor': '#0F172A', 'noteBorderColor': '#EAB308'}}}%%
 sequenceDiagram
     autonumber
     actor User as Người dùng / SOC Operator
@@ -138,7 +139,7 @@ sequenceDiagram
 
     User->>GUI: Thao tác Kéo-Thả tập tin PE (EXE/DLL)
     
-    rect rgb(30, 40, 60)
+    rect rgb(224, 242, 254)
         note over GUI,ML: GIAI ĐOẠN 1: PHÂN TÍCH TĨNH AI (STATIC PIPELINE)
         GUI->>Static: Gọi pe_analyzer.exe / PeParser
         Static->>Static: Trích xuất PE Headers, Sections, IAT, TLS Callbacks
@@ -148,7 +149,7 @@ sequenceDiagram
         ML-->>GUI: Trả về Xác suất Độc hại Tĩnh (Static Score)
     end
 
-    rect rgb(40, 30, 60)
+    rect rgb(243, 232, 255)
         note over GUI,BHR: GIAI ĐOẠN 2: PHÂN TÍCH ĐỘNG (DYNAMIC SANDBOX PIPELINE)
         GUI->>Launcher: Khởi chạy BHPAISandbox.exe [Target Sample]
         Launcher->>Launcher: Tạo Virtual Desktop "BHPAISandboxDesktop"
@@ -167,7 +168,7 @@ sequenceDiagram
         end
     end
 
-    rect rgb(60, 40, 30)
+    rect rgb(254, 237, 222)
         note over BHR,GUI: GIAI ĐOẠN 3: PHÁT HIỆN RANSOMWARE & KHÔI PHỤC DỮ LIỆU
         Monitor->>BHR: Gửi dữ liệu khối ghi đĩa (Entropy Calculation)
         alt Entropy >= 7.5 (Phát hiện Ransomware mã hóa)
