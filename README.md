@@ -1,6 +1,6 @@
 # TÀI LIỆU DỰ ÁN TOÀN DIỆN: BHPAI
 > **Phiên bản hệ thống**: V1.5 Enterprise Edition  
-> **Tác giả**: Ivan
+> **Tác giả**: Bao
 > **Ngôn ngữ phát triển**: C++17 (MinGW-w64 / MSYS2), Python 3.9+, PyQt6, FastAPI, MinHook, Capstone Engine, PyTorch, LightGBM  
 > **Tài liệu tham chiếu master**: Chi tiết kiến trúc, giải thuật, cấu trúc mã nguồn, quy trình bảo mật và hướng dẫn vận hành toàn bộ hệ thống BHPAI.
 
@@ -639,4 +639,4 @@ python gui.py
 ```
 
 ---
-*Tài liệu Master của dự án BHPAI được biên soạn và bảo trì bởi Ivan.*
+*Tài liệu Master của dự án BHPAI được biên soạn và bảo trì bởi Bao.*
