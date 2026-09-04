@@ -709,7 +709,8 @@ dataset/pdf/
 ### 6.2 Xóa bỏ lối tắt suy luận "False Positive Machine" qua Hard Negatives
 Trong thực tế, nếu tập dữ liệu huấn luyện chỉ gồm mã độc phức tạp (có JavaScript, `/OpenAction`, tệp đính kèm) đối nghịch với tập lành tính đơn giản (chỉ có văn bản và ảnh tĩnh), mô hình AI sẽ rơi vào bẫy **Lối tắt Suy luận (Heuristic Shortcut Failure)**:
 
-$$\text{Quy tắc học vẹt: } \mathbf{if} \ (\text{has\_javascript} == 1 \ \mathbf{or} \ \text{has\_openaction} == 1) \rightarrow \text{MALWARE}$$
+> ⚠️ **Lối tắt học vẹt sai lầm**:  
+> `IF (has_javascript == 1 OR has_openaction == 1) => MALWARE`
 
 Khi đưa vào môi trường doanh nghiệp thực tế (nơi các biểu mẫu thuế, hóa đơn điện tử, tài liệu kế toán đều sử dụng JavaScript để tính toán và `/OpenAction` để chỉnh viewport), mô hình sẽ báo động giả tràn lan (**False Positive Machine**).
 
