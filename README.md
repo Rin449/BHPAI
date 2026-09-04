@@ -95,7 +95,7 @@ BHPAI được thiết kế dựa trên 4 trụ cột kiến trúc vững chắc
                                └───────────────────────────┘
 ```
 
-1. **Safety First (An toàn tuyệt đối)**: Sandbox hoạt động trong môi trường **Desktop ảo độc lập** (`BHPAISandboxDesktop`), bị giới hạn nghiêm ngặt bởi **Windows Job Object Constraints** và **Restricted Token**. Cơ chế **Copy-On-Write (COW)** đảm bảo không một byte dữ liệu nào do malware tạo/sửa/xóa có thể chạm tới hệ thống thật.
+1. **Safety First**: Sandbox hoạt động trong môi trường **Desktop ảo độc lập** (`BHPAISandboxDesktop`), bị giới hạn nghiêm ngặt bởi **Windows Job Object Constraints** và **Restricted Token**. Cơ chế **Copy-On-Write (COW)** đảm bảo không một byte dữ liệu nào do malware tạo/sửa/xóa có thể chạm tới hệ thống thật.
 2. **Stealth Anti-Evasion (Tự ẩn giấu)**: Monitor DLL tự un-link khỏi 3 danh sách PEB Module, xóa sạch PE Header & Debug PDB trên RAM, đồng thời khôi phục DACL bảo vệ Sandbox Launcher khỏi bị malware vô hiệu hóa.
 3. **Data Protection & Key Recovery (Bảo vệ & Phục hồi dữ liệu)**: BHR Engine phát hiện tức thì các dấu hiệu mã hóa entropy cao, tự động trích xuất khóa AES/ChaCha20/Salsa20 từ bộ nhớ RAM & file swap `pagefile.sys`, đồng thời phục hồi 100% tệp gốc từ vùng đệm COW Overlay.
 4. **Explainable AI (Trí tuệ nhân tạo có giải thích)**: Kết hợp Opcode N-Grams, Graph Neural Network (GNN) trên Control Flow Graph (CFG) và mô hình LightGBM được tối ưu bằng **SHAP Feature Pruning** giúp đạt tỷ lệ cảnh báo nhầm (False Positive) tiệm cận 0%.
