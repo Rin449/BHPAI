@@ -1,4 +1,4 @@
-# 🛡️ TÀI LIỆU DỰ ÁN TOÀN DIỆN: BHPAI
+# TÀI LIỆU DỰ ÁN TOÀN DIỆN: BHPAI
 > **Phiên bản hệ thống**: V1.6 Enterprise Edition
 > **Tác giả**: Bao
 > **Ngôn ngữ & Công nghệ cốt lõi**: C++17 (MinGW-w64 / MSYS2), Python 3.9+, PyQt6, FastAPI, MinHook, Capstone Engine, Intel PT (Processor Trace), PyTorch, LightGBM, OpenSSL 3.x, zlib, Argon2id, Cryptography  
@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 MỤC LỤC TỔNG QUAN
+## MỤC LỤC TỔNG QUAN
 
 1. [TỔNG QUAN DỰ ÁN & TẦM NHÌN KIẾN TRÚC ĐA ĐỊNH DẠNG](#1-tổng-quan-dự-án--tầm-nhìn-kiến-trúc-đa-định-dạng)
    - [1.1 Bối cảnh an ninh mạng & Thách thức bảo mật hiện đại](#11-bối-cảnh-an-ninh-mạng--thách-thức-bảo-mật-hiện-đại)
