@@ -1,7 +1,0 @@
-{
-  "threshold": 0.36999999999999994,
-  "objective": "f1",
-  "score": 0.9895833333333334,
-  "false_positive_cost": 1.0,
-  "false_negative_cost": 2.0
-}
