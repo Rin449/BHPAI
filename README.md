@@ -1,5 +1,5 @@
 # TÀI LIỆU DỰ ÁN: BHPAI 
-> **Phiên bản hệ thống**: V1.6 Enterprise Edition (Bản cập nhật Toàn diện Tính năng Hệ thống)  
+> **Phiên bản hệ thống**: V1.6 
 > **Tác giả**: BHPAI Engineering Team  
 > **Ngôn ngữ & Công nghệ cốt lõi**: C++17 (MinGW-w64 / MSYS2), Python 3.9+, PyQt6, MinHook, Capstone Engine, Intel PT (Processor Trace), PyTorch, LightGBM, OpenSSL 3.x, zlib, Argon2id, Cryptography, Ed25519  
 > **Tài liệu tham chiếu Master**: Chi tiết kiến trúc đa định dạng (Multi-Format), giải thuật phân tích đệ quy, phân tích tĩnh PE & PDF, giám sát động Sandbox Stealth Ring-3, trích xuất cấu trúc khóa Ransomware, mô hình AI chống cảnh báo giả (False Positive Resistant), hệ thống cứu hộ ngoại tuyến WinRE và bảo mật dữ liệu Zero-Knowledge.
