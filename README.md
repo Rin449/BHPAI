@@ -1,4 +1,4 @@
-# BHPAI - Hướng Dẫn Sử Dụng
+# BHPAI  - Hướng Dẫn Sử Dụng 
 
 Tài liệu hướng dẫn sử dụng bộ công cụ bảo mật, phân tích mã độc và cứu hộ hệ thống **BHPAI**.
 
@@ -62,7 +62,7 @@ Hệ thống được thiết kế để bạn có thể **sử dụng ngay lậ
 
 ### Sau khi kết thúc 5 ngày dùng thử
 - Sau khi hết thời hạn 5 ngày dùng thử, các công cụ sẽ tự động kích hoạt lại yêu cầu bản quyền và cần file `license.dat` để tiếp tục hoạt động.
-- Khi đó, bạn chỉ cần dùng công cụ `get_hwid.exe` có sẵn trong thư mục để lấy mã máy (tự động sao chép vào Clipboard) và yêu cầu cấp file `license.dat` đặt vào thư mục `release_bin`.
+- Khi đó, bạn chỉ cần dùng công cụ `get_hwid.exe` có sẵn trong thư mục để lấy mã máy (tự động sao chép vào Clipboard) và yêu cầu cấp file `license.dat` đặt vào thư mục.
 
 ---
 
@@ -257,27 +257,46 @@ Công cụ cứu hộ chuyên nghiệp được thiết kế để chạy trong 
 
 Khi bạn nhận được một file khả nghi (ví dụ: `sample.exe` hoặc `document.pdf`), hãy thực hiện theo trình tự khuyến nghị sau:
 
-```mermaid
-flowchart TD
-    A[Mẫu khả nghi] --> B{Định dạng tệp?}
-    B -->|File PE: .exe, .dll| C[pe_analyzer.exe]
-    B -->|File PDF: .pdf| D[pdf_analyzer.exe]
-    
-    C --> E[Đánh giá tĩnh: Entropy, APIs, YARA]
-    D --> F[Bóc tách JS & Embedded Payloads]
-    
-    E --> G{Có dấu hiệu Ransomware?}
-    G -->|Đúng| H[bhr_identify.exe]
-    G -->|Cần chạy thử nghiệm| I[BHPAISandbox.exe]
-    
-    H --> I
-    I --> J[Tạo log events.jsonl & Rollback ảo hóa]
-    J --> K[Trích xuất khóa mã hóa RAM nếu cần: --extract-keys-auto]
-    
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style I fill:#bbf,stroke:#333,stroke-width:2px
-    style K fill:#bfb,stroke:#333,stroke-width:2px
+```text
+                  ┌────────────────────────┐
+                  │    TỆP TIN KHẢ NGHI    │
+                  └───────────┬────────────┘
+                              │
+                    [Kiểm tra định dạng]
+                              │
+          ┌───────────────────┴───────────────────┐
+          │ (File thực thi: .exe, .dll)           │ (Tài liệu: .pdf)
+          ▼                                       ▼
+┌───────────────────────────┐           ┌───────────────────────────┐
+│      pe_analyzer.exe      │           │     pdf_analyzer.exe      │
+│  - Bóc tách PE Header     │           │  - Phân tích JS làm rối   │
+│  - Section Entropy        │           │  - Trích xuất payload ẩn  │
+│  - Disassembly Capstone   │           │  - Defang IOCs (IP/Domain)│
+│  - Sinh rule YARA + JSON  │           │  - Báo cáo Universal JSON │
+└─────────────┬─────────────┘           └───────────────────────────┘
+              │
+    [Dấu hiệu Ransomware?]
+              │
+              ├──────────────────────────────┐
+              │ (Đúng)                       │ (Cần kiểm chứng động)
+              ▼                              ▼
+┌───────────────────────────┐           ┌───────────────────────────┐
+│     bhr_identify.exe      │           │     BHPAISandbox.exe      │
+│  - Đánh giá 10 trụ cột    ├──────────►│  - Cách ly ảo hóa Overlay │
+│  - BHR Crypto Profile Card│           │  - Hooking API & Nhân ETW │
+└───────────────────────────┘           └─────────────┬─────────────┘
+                                                      │
+                                        [Nghi vấn mã hóa dữ liệu?]
+                                                      │
+                                                      ▼
+                                        ┌───────────────────────────┐
+                                        │ Forensics Key Extraction  │
+                                        │  - --extract-keys-auto    │
+                                        │  - Trích xuất khóa AES/RSA│
+                                        │    còn lại từ RAM/Pagefile│
+                                        └───────────────────────────┘
 ```
+
 
 1. **Bước 1 - Phân tích tĩnh ban đầu**:
    - Dùng `pe_analyzer.exe sample.exe` để xem cấu trúc, entropy, các chuỗi nhạy cảm và tạo rule YARA.
